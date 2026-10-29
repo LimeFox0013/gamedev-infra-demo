@@ -1,0 +1,21 @@
+{
+  "frames": 240,
+  "log_every": 1,
+  "watch": ["PlayerTank", "EnemyTank*", "PlayerShell*", "Score:text", "EagleBase"],
+  "inputs": [
+    {"frame": 2, "action": "fire", "pressed": true},
+    {"frame": 130, "action": "move_right", "pressed": true},
+    {"frame": 148, "action": "move_right", "pressed": false},
+    {"frame": 160, "action": "move_up", "pressed": true},
+    {"frame": 180, "action": "move_up", "pressed": false},
+    {"frame": 230, "action": "fire", "pressed": false}
+  ],
+  "expect": [
+    {"name": "player tank appears", "node": "PlayerTank", "exists": true, "byFrame": 1},
+    {"name": "enemy tanks appear", "node": "EnemyTank*", "exists": true, "byFrame": 1},
+    {"name": "eagle base appears", "node": "EagleBase", "exists": true, "byFrame": 1},
+    {"name": "arrows move tank", "node": "PlayerTank", "changes": "position", "withInput": true},
+    {"name": "space fires shells", "node": "PlayerShell*", "exists": true, "byFrame": 30},
+    {"name": "destroying tanks earns score", "node": "Score", "increases": "text"}
+  ]
+}

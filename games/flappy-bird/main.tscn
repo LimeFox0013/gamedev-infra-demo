@@ -1,0 +1,61 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Script" path="res://sky.gd" id="2_sky"]
+[ext_resource type="Script" path="res://moon.gd" id="3_moon"]
+[ext_resource type="Script" path="res://background.gd" id="4_bg"]
+[ext_resource type="Script" path="res://ground.gd" id="5_ground"]
+[ext_resource type="Script" path="res://bird.gd" id="6_bird"]
+[ext_resource type="Script" path="res://pixel_text.gd" id="7_text"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Sky" type="Node2D" parent="."]
+script = ExtResource("2_sky")
+
+[node name="Moon" type="Node2D" parent="."]
+position = Vector2(102, 58)
+script = ExtResource("3_moon")
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("4_bg")
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="."]
+script = ExtResource("5_ground")
+
+[node name="Haunts" type="Node2D" parent="."]
+
+[node name="Bird" type="Node2D" parent="."]
+position = Vector2(40, 108)
+script = ExtResource("6_bird")
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Node2D" parent="Hud"]
+position = Vector2(72, 22)
+script = ExtResource("7_text")
+text = "0"
+pixel = 3
+
+[node name="Hint" type="Node2D" parent="Hud"]
+position = Vector2(72, 140)
+script = ExtResource("7_text")
+text = "GET READY\n\nPRESS SPACE\nOR CLICK TO FLAP"
+
+[node name="Panel" type="Node2D" parent="Hud"]
+position = Vector2(72, 84)
+script = ExtResource("7_text")
+text = "GAME OVER"
+color = Color(1, 0.65, 0.23, 1)
+outline = Color(0.91, 0.5, 0.11, 1)
+box = true
+box_color = Color(0.16, 0.1, 0.24, 1)
+
+[node name="Flash" type="ColorRect" parent="Hud"]
+offset_right = 144.0
+offset_bottom = 256.0
+mouse_filter = 2
+color = Color(1, 0.3, 0.3, 1)
