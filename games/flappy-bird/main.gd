@@ -9,6 +9,7 @@ const Sfx := preload("res://sfx.gd")
 const GROUND_Y := 216.0
 const BIRD_RADIUS := 4.0
 const BIRD_HALF_SIZE := Vector2(7.0, 4.5)
+const SMASH_FLASH := 0.3
 const SCROLL_SPEED := 50.0
 const PIPE_START_X := 160.0
 const HAUNT_START_X := 160.0
@@ -162,11 +163,9 @@ func _check_collisions() -> void:
 		_land_if_ground()
 		_die()
 		return
-	for pipe in _pipes:
+	for pipe in _pipes.duplicate():
 		if pipe.hits(_bird.position, BIRD_HALF_SIZE):
 			_shatter(pipe)
-			_die()
-			return
 	for haunt in _haunts:
 		if haunt.position.distance_to(_bird.position) < haunt.radius + BIRD_RADIUS:
 			_die()
@@ -181,6 +180,9 @@ func _shatter(pipe: Node2D) -> void:
 	pieces.burst(pipe, _bird.position, _rng)
 	_pipes.erase(pipe)
 	_pipe_factory.release(pipe)
+	_sfx.play("hit")
+	_flash.modulate.a = SMASH_FLASH
+	create_tween().tween_property(_flash, "modulate:a", 0.0, 0.2)
 
 
 func _bird_landed() -> bool:
