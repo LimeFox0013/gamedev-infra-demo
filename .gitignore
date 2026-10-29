@@ -1,0 +1,8 @@
+# Godot's import cache and every export are generated, never committed.
+.godot/
+build/
+# The playtest harness link scripts/playtest.sh makes for one run.
+.lf-playtest
+# A crashed engine leaves a core dump behind; it is never source.
+core
+core.*

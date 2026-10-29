@@ -1,0 +1,3 @@
+[submodule "lf-godot-gd-utils"]
+	path = libs/lf-godot-gd-utils
+	url = https://github.com/LimeFox0013/lf-godot-gd-utils

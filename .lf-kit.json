@@ -1,0 +1,76 @@
+{
+  "kit": "game-factory",
+  "version": 6,
+  "libraries": {
+    "lf-godot-gd-utils": {
+      "version": "1.0.0",
+      "commit": "44bf3b148029efc1c414995f04fa3fce05eba21f",
+      "source": "https://github.com/LimeFox0013/lf-godot-gd-utils",
+      "path": "libs/lf-godot-gd-utils"
+    },
+    "gut": {
+      "version": "9.7.1",
+      "commit": "aeb5d4f3f7f0a6c9b5e178876d6c99b791fda605",
+      "source": "https://github.com/bitwes/Gut",
+      "path": "libs/gut"
+    }
+  },
+  "removed": {
+    ".github/workflows/build-image.yml": [
+      "dadf156b14a65c5f623d6499bf9331a761e360dc",
+      "fe25e3b7d8b575711e58bdc163b0f5987cbb24c3"
+    ],
+    "deploy/Dockerfile": [
+      "7cf110f2dbba521be4fd1b5fb582fd6d4780070c"
+    ],
+    "deploy/nginx.conf": [
+      "d9f9a713c8b70542da55dde46de8d472b22d6d7f"
+    ],
+    "scripts/export-web.sh": [
+      "13ad979578262d967841af4b713decf93275cd5c"
+    ],
+    "scripts/init-game.sh": [
+      "2b0881489dff16ff210c4811fb34b417f92464d2",
+      "49227b57fcdc0cfc73584112aea1a7688b7c10ef",
+      "6ad544f962bd691071c10f728487ce2a34e2ebbc",
+      "dbd8668195b2471bed721986e98783ee21ede3fa"
+    ],
+    "scripts/lib-links.sh": [
+      "5d5c79fc81fe7c61473765b05d90e5238713a8da"
+    ],
+    "scripts/local-run.sh": [
+      "928ae010318ff08aecdc004b5d53407d4faa34c3"
+    ],
+    "scripts/play-export.sh": [
+      "f983e0ae7bb301368bd468370c4a3a062d5930dd"
+    ],
+    "scripts/preview.sh": [
+      "5e0d952fc8f730bc3a8753ea0c34090be2f8baa4"
+    ],
+    "templates/jump/.gutconfig.json": [
+      "80e946ecdbd98a8b9932266c1cf2a56e80f9f621"
+    ],
+    "templates/jump/export_presets.cfg": [
+      "999cb6acd7cad951093d3ed5e4d6648a23db20ab"
+    ],
+    "templates/jump/jump_world.gd": [
+      "09dc33d2d8fb593b6bff47ce61cc4894bf6a6183"
+    ],
+    "templates/jump/main.gd": [
+      "14be44bf355eb00a39a0eaa84434ef28e98a4237"
+    ],
+    "templates/jump/main.tscn": [
+      "92df2b0c709f413c59fa538397da1ef65d202133"
+    ],
+    "templates/jump/project.godot": [
+      "4f35f97a1f577589311f4b58d3dcb75c8e3a409c"
+    ],
+    "templates/jump/tests/test_jump_world.gd": [
+      "2b3aa3336c8aed46f538f38e37ea9b8717930337"
+    ],
+    "templates/jump/tests/test_main.gd": [
+      "b818cbfadef154985ca09d27b3a9aa82a300a257"
+    ]
+  },
+  "digest": "sha256:510e79afeb37adf0368cb9999470f9d3b6a9565cb0c29f69a6b5bcdec63cbb1e"
+}
