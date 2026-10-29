@@ -1,0 +1,117 @@
+{
+ "frames": 300,
+ "log_every": 20,
+ "watch": [
+  "Bird:position",
+  "Pipe*",
+  "Hud/Score:text"
+ ],
+ "inputs": [
+  {
+   "frame": 5,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 7,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 42,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 44,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 79,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 81,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 116,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 118,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 153,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 155,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 190,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 192,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 227,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 229,
+   "action": "flap",
+   "pressed": false
+  },
+  {
+   "frame": 264,
+   "action": "flap",
+   "pressed": true
+  },
+  {
+   "frame": 266,
+   "action": "flap",
+   "pressed": false
+  }
+ ],
+ "expect": [
+  {
+   "name": "bird appears",
+   "node": "Bird",
+   "exists": true,
+   "byFrame": 10
+  },
+  {
+   "name": "pipes appear",
+   "node": "Pipe*",
+   "exists": true,
+   "byFrame": 60
+  },
+  {
+   "name": "bird moves on flap",
+   "node": "Bird",
+   "changes": "position",
+   "withInput": true
+  },
+  {
+   "name": "score grows",
+   "node": "Hud/Score",
+   "increases": "text",
+   "withInput": true
+  }
+ ]
+}
