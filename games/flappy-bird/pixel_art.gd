@@ -1,13 +1,14 @@
 extends RefCounted
 
 const PALETTE := {
-	"K": Color("3b2a2a"),
+	"K": Color("2a1a2e"),
 	"Y": Color("f8d63a"),
 	"D": Color("e0a21c"),
-	"W": Color("ffffff"),
+	"W": Color("f4f4ff"),
 	"O": Color("f4742b"),
-	"R": Color("d9402a"),
+	"R": Color("e0342a"),
 	"L": Color("fff0a0"),
+	"P": Color("6b3a8c"),
 }
 
 

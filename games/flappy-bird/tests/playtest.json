@@ -4,6 +4,9 @@
  "watch": [
   "Bird:position",
   "Pipe*",
+  "Ghost*",
+  "Bat*",
+  "PipePiece*",
   "Hud/Score:text"
  ],
  "inputs": [
@@ -112,6 +115,30 @@
    "node": "Hud/Score",
    "increases": "text",
    "withInput": true
+  },
+  {
+   "name": "blood moon rises",
+   "node": "Moon",
+   "exists": true,
+   "byFrame": 10
+  },
+  {
+   "name": "ghosts appear",
+   "node": "Ghost*",
+   "exists": true,
+   "byFrame": 150
+  },
+  {
+   "name": "bats appear",
+   "node": "Bat*",
+   "exists": true,
+   "byFrame": 200
+  },
+  {
+   "name": "pipe breaks into pieces",
+   "node": "PipePiece*",
+   "exists": true,
+   "byFrame": 300
   }
  ]
 }

@@ -2,22 +2,45 @@ extends Node2D
 
 const GAP := 52.0
 const CAP_WIDTH := 22.0
-const BODY_WIDTH := 18.0
 const CAP_HEIGHT := 8.0
-const BOTTOM := 224.0
+const BODY_WIDTH := 18.0
+const PIECE := 2
+const BOTTOM := 218
+const ATLAS_SIZE := Vector2i(22, 10)
+const BODY_SRC := Vector2i(2, 8)
 const DARK := Color("3b2a2a")
 const GREEN := Color("73bf2e")
 const LIGHT := Color("b4ea5c")
 const SHADE := Color("4c8a1c")
 
+static var _atlas: ImageTexture
+
 var gap_y := 100.0
 var scored := false
+var cell_pos := PackedVector2Array()
+var cell_src := PackedVector2Array()
+
+
+static func atlas() -> ImageTexture:
+	if _atlas == null:
+		var img := Image.create(ATLAS_SIZE.x, ATLAS_SIZE.y, false, Image.FORMAT_RGBA8)
+		_paint(img, Rect2i(0, 0, 22, 8), [Rect2i(1, 1, 20, 6), Rect2i(2, 1, 3, 6), Rect2i(16, 1, 5, 6)])
+		_paint(img, Rect2i(2, 8, 18, 2), [Rect2i(3, 8, 16, 2), Rect2i(4, 8, 3, 2), Rect2i(15, 8, 4, 2)])
+		_atlas = ImageTexture.create_from_image(img)
+	return _atlas
+
+
+static func _paint(img: Image, outer: Rect2i, inner: Array) -> void:
+	img.fill_rect(outer, DARK)
+	for i in inner.size():
+		img.fill_rect(inner[i], [GREEN, LIGHT, SHADE][i])
 
 
 func reset(new_gap_y: float, x: float) -> void:
-	gap_y = new_gap_y
+	gap_y = roundf(new_gap_y)
 	scored = false
 	position = Vector2(x, 0)
+	_build_cells()
 	queue_redraw()
 
 
@@ -29,20 +52,34 @@ func gap_bottom() -> float:
 	return gap_y + GAP / 2.0
 
 
+func _build_cells() -> void:
+	cell_pos.clear()
+	cell_src.clear()
+	var cap_y := int(gap_top()) - int(CAP_HEIGHT)
+	_add_cap(cap_y)
+	for y in range(cap_y - PIECE, -PIECE - 1, -PIECE):
+		_add_body(y)
+	cap_y = int(gap_bottom())
+	_add_cap(cap_y)
+	for y in range(cap_y + int(CAP_HEIGHT), BOTTOM, PIECE):
+		_add_body(y)
+
+
+func _add_cap(y: int) -> void:
+	for row in int(CAP_HEIGHT) / PIECE:
+		for col in int(CAP_WIDTH) / PIECE:
+			cell_pos.append(Vector2(-CAP_WIDTH / 2.0 + col * PIECE, y + row * PIECE))
+			cell_src.append(Vector2(col * PIECE, row * PIECE))
+
+
+func _add_body(y: int) -> void:
+	for col in int(BODY_WIDTH) / PIECE:
+		cell_pos.append(Vector2(-BODY_WIDTH / 2.0 + col * PIECE, y))
+		cell_src.append(Vector2(BODY_SRC.x + col * PIECE, BODY_SRC.y))
+
+
 func _draw() -> void:
-	_part(-300.0, gap_top(), true)
-	_part(gap_bottom(), BOTTOM, false)
-
-
-func _part(y0: float, y1: float, cap_at_end: bool) -> void:
-	var body_half := BODY_WIDTH / 2.0
-	draw_rect(Rect2(-body_half, y0, BODY_WIDTH, y1 - y0), DARK)
-	draw_rect(Rect2(-body_half + 1, y0, BODY_WIDTH - 2, y1 - y0), GREEN)
-	draw_rect(Rect2(-body_half + 2, y0, 3, y1 - y0), LIGHT)
-	draw_rect(Rect2(body_half - 5, y0, 4, y1 - y0), SHADE)
-	var cap_y := y1 - CAP_HEIGHT if cap_at_end else y0
-	var cap_half := CAP_WIDTH / 2.0
-	draw_rect(Rect2(-cap_half, cap_y, CAP_WIDTH, CAP_HEIGHT), DARK)
-	draw_rect(Rect2(-cap_half + 1, cap_y + 1, CAP_WIDTH - 2, CAP_HEIGHT - 2), GREEN)
-	draw_rect(Rect2(-cap_half + 2, cap_y + 1, 3, CAP_HEIGHT - 2), LIGHT)
-	draw_rect(Rect2(cap_half - 6, cap_y + 1, 5, CAP_HEIGHT - 2), SHADE)
+	var texture := atlas()
+	for i in cell_pos.size():
+		draw_texture_rect_region(
+			texture, Rect2(cell_pos[i], Vector2(PIECE, PIECE)), Rect2(cell_src[i], Vector2(PIECE, PIECE)))
