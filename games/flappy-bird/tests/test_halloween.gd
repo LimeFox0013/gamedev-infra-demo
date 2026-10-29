@@ -3,6 +3,7 @@ extends GutTest
 const PipeScript := preload("res://pipe.gd")
 const PiecesScript := preload("res://pipe_pieces.gd")
 const HauntScript := preload("res://haunt.gd")
+const BirdScript := preload("res://bird.gd")
 
 
 func _pipe(gap_y := 100.0) -> Node2D:
@@ -34,6 +35,31 @@ func test_pipe_pieces_leave_the_gap_free() -> void:
 		assert_false(inside_gap, "piece at %s is inside the gap" % p)
 
 
+func test_pipe_hits_bird_outside_the_gap_only() -> void:
+	var pipe := _pipe(100.0)
+	var half := Vector2(7.0, 4.5)
+	assert_false(pipe.hits(Vector2(80.0, 100.0), half), "centre of gap is free")
+	assert_true(pipe.hits(Vector2(80.0, 60.0), half), "above the gap hits the top pipe")
+	assert_true(pipe.hits(Vector2(80.0, 140.0), half), "below the gap hits the bottom pipe")
+	assert_true(pipe.hits(Vector2(80.0, -500.0), half), "far above the screen still hits")
+	assert_false(pipe.hits(Vector2(20.0, 60.0), half), "a bird far to the left is safe")
+
+
+func test_pipe_edge_touch_matches_the_drawing() -> void:
+	var pipe := _pipe(100.0)
+	var half := Vector2(7.0, 4.5)
+	assert_true(pipe.hits(Vector2(80.0 - 11.0 - 6.0, 70.0), half), "beak over the cap edge hits")
+	assert_false(pipe.hits(Vector2(80.0 - 11.0 - 8.0, 70.0), half), "just clear of the cap")
+
+
+func test_bird_cannot_leave_through_the_top() -> void:
+	var bird := _bird()
+	for i in 600:
+		bird.flap()
+		bird.step(1.0 / 60.0)
+	assert_gte(bird.position.y, BirdScript.CEILING)
+
+
 func test_breaking_a_pipe_creates_one_piece_per_cell() -> void:
 	var pipe := _pipe()
 	var pieces := Node2D.new()
@@ -61,3 +87,10 @@ func test_bat_is_faster_than_ghost_and_waves_slightly() -> void:
 	assert_gt(HauntScript.BAT_SPEED, HauntScript.GHOST_SPEED)
 	assert_lte(high - low, HauntScript.BAT_WAVE * 2.0 + 0.01)
 	assert_gt(high - low, 1.0)
+
+
+func _bird() -> Node2D:
+	var bird := Node2D.new()
+	bird.set_script(BirdScript)
+	add_child_autofree(bird)
+	return bird

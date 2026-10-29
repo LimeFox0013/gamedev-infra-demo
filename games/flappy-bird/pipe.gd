@@ -6,6 +6,7 @@ const CAP_HEIGHT := 8.0
 const BODY_WIDTH := 18.0
 const PIECE := 2
 const BOTTOM := 218
+const TOP_EXTENT := 600.0
 const ATLAS_SIZE := Vector2i(22, 10)
 const BODY_SRC := Vector2i(2, 8)
 const DARK := Color("3b2a2a")
@@ -52,6 +53,27 @@ func gap_bottom() -> float:
 	return gap_y + GAP / 2.0
 
 
+func solid_rects() -> Array[Rect2]:
+	var body := BODY_WIDTH / 2.0
+	var cap := CAP_WIDTH / 2.0
+	var top_cap_y := gap_top() - CAP_HEIGHT
+	var bottom_body_y := gap_bottom() + CAP_HEIGHT
+	return [
+		Rect2(-body, -TOP_EXTENT, BODY_WIDTH, top_cap_y + TOP_EXTENT),
+		Rect2(-cap, top_cap_y, CAP_WIDTH, CAP_HEIGHT),
+		Rect2(-cap, gap_bottom(), CAP_WIDTH, CAP_HEIGHT),
+		Rect2(-body, bottom_body_y, BODY_WIDTH, BOTTOM - bottom_body_y),
+	]
+
+
+func hits(center: Vector2, half_size: Vector2) -> bool:
+	var box := Rect2(center - position - half_size, half_size * 2.0)
+	for rect in solid_rects():
+		if box.intersects(rect):
+			return true
+	return false
+
+
 func _build_cells() -> void:
 	cell_pos.clear()
 	cell_src.clear()
@@ -66,14 +88,14 @@ func _build_cells() -> void:
 
 
 func _add_cap(y: int) -> void:
-	for row in int(CAP_HEIGHT) / PIECE:
-		for col in int(CAP_WIDTH) / PIECE:
+	for row in int(CAP_HEIGHT / PIECE):
+		for col in int(CAP_WIDTH / PIECE):
 			cell_pos.append(Vector2(-CAP_WIDTH / 2.0 + col * PIECE, y + row * PIECE))
 			cell_src.append(Vector2(col * PIECE, row * PIECE))
 
 
 func _add_body(y: int) -> void:
-	for col in int(BODY_WIDTH) / PIECE:
+	for col in int(BODY_WIDTH / PIECE):
 		cell_pos.append(Vector2(-BODY_WIDTH / 2.0 + col * PIECE, y))
 		cell_src.append(Vector2(BODY_SRC.x + col * PIECE, BODY_SRC.y))
 

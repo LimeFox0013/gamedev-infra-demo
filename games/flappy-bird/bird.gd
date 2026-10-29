@@ -5,6 +5,7 @@ const GRAVITY := 620.0
 const FLAP_SPEED := -190.0
 const MAX_FALL := 260.0
 const RADIUS := 4.0
+const CEILING := 5.0
 const TILT_STEP := PI / 12.0
 const BODY := [
 	"....KKKKKK......",
@@ -62,6 +63,9 @@ func step(delta: float) -> void:
 	_time += delta
 	velocity = minf(velocity + GRAVITY * delta, MAX_FALL)
 	position.y += velocity * delta
+	if position.y < CEILING:
+		position.y = CEILING
+		velocity = maxf(velocity, 0.0)
 	rotation = snappedf(clampf(velocity / 220.0, -0.45, 1.4), TILT_STEP)
 	if alive:
 		_animate()
